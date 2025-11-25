@@ -1,0 +1,431 @@
+/*
+  styles-refatorado.css
+  Refatoração limpa e padronizada do seu CSS original.
+  Observação: inclui referência à imagem de fundo local (uploaded file):
+  /mnt/data/1d30969e-e7d7-455c-a5d3-0957eb5d0725.png
+
+  Substitua seu arquivo assets/css/styles.css por este ou copie/cole o conteúdo.
+*/
+
+:root {
+  /* cores */
+  --primary: #0D47A1;
+  --primary-2: #1565C0;
+  --muted: #6B7280;
+  --bg: #F3F4F6;
+
+  /* layout */
+  --max-content-width: 1180px;
+  --box-width: 588px;
+  --header-height: 420px;
+
+  /* planos */
+  --plan-width: 300px;
+  --plan-height: 420px;
+  --plan-padding: 20px;
+
+  /* visual */
+  --radius: 16px;
+  /* padroniza bordas arredondadas */
+  --card-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+
+  /* imagem de fundo (mantive como variável - troque a url conforme necessário) */
+  --bg-image: url('../images/pagina_de_login_academia1.jpg');
+}
+
+/* ====== Reset / base ====== */
+* {
+  box-sizing: border-box
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  margin: 0;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  text-align: center;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0.45)), var(--bg-image);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* ====== Header ====== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: auto;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25)), var(--bg-image);
+  background-position: center;
+  background-size: cover;
+  color: #fff;
+  overflow: hidden;
+}
+
+.header-inner {
+  position: relative;
+  z-index: 1;
+  max-width: var(--max-content-width);
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px;
+  background: transparent;
+}
+
+.logo {
+  height: 150px;
+  max-width: 360px;
+  width: auto;
+  object-fit: contain
+}
+
+/* garante que main inicie abaixo do header fixo */
+body.main-page #container {
+  padding-top: calc(var(--header-height) + 8px);
+  margin-top: 0
+}
+
+/* ====== Cards / planos - padrão ====== */
+.card,
+.plan-highlight {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--card-shadow);
+  max-width: var(--max-content-width);
+  margin: 18px auto;
+  text-align: center;
+}
+
+/* Grid de planos (desktop) */
+.grid.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, var(--plan-width));
+  justify-content: center;
+  gap: 20px;
+  margin: 12px auto 0;
+}
+
+/* Items dentro da grid (padronizados) */
+.grid.grid-3>* {
+  width: var(--plan-width);
+  height: var(--plan-height);
+  padding: var(--plan-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+}
+
+/* títulos e subtítulos dentro dos cards */
+.grid.grid-3>* .section-title,
+.grid.grid-3>* h3,
+.grid.grid-3>* h4 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: var(--primary-2);
+}
+
+.grid.grid-3>* .plan-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.grid.grid-3>* .plan-actions {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center
+}
+
+.grid.grid-3>* .btn {
+  padding: 10px 14px;
+  flex: 1 1 auto;
+  max-width: 160px
+}
+
+/* Tipografia padronizada */
+.section-title {
+  color: var(--primary);
+  font-size: 24px;
+  margin-bottom: 6px;
+  font-weight: 700
+}
+
+.plan-title {
+  margin: 0;
+  font-weight: 700;
+  color: var(--primary-2);
+  font-size: 18px
+}
+
+.plan-sub {
+  color: var(--muted);
+  margin: 6px 0 12px
+}
+
+.price {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--primary-2)
+}
+
+.price.highlight {
+  font-size: 28px
+}
+
+.pix {
+  color: var(--muted);
+  font-size: 14px
+}
+
+/* notas internas (caixas azuis) */
+.plan-note .note {
+  background: #E3F2FD;
+  padding: 10px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: #0b4b78
+}
+
+/* botões - padronização */
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .18s ease;
+}
+
+.header .btn-primary {
+  background: var(--primary-2);
+  color: #fff;
+  border: none;
+  padding: 12px 26px;
+  border-radius: 10px;
+  font-weight: 700;
+  margin: 2px;
+  box-shadow: 0 6px 18px rgba(13, 71, 161, 0.12);
+}
+
+.btn-primary {
+  background: #fff;
+  color: var(--primary-2);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: var(--card-shadow)
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(16, 24, 40, 0.10)
+}
+
+.btn-outline {
+  background: var(--primary-2);
+  color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 6px 18px rgba(21, 101, 192, 0.12)
+}
+
+.btn-outline:hover {
+  filter: brightness(0.95);
+  transform: translateY(-2px)
+}
+
+.btn-link-more {
+  color: var(--primary-2);
+  background: transparent;
+  border: 2px solid rgba(21, 101, 192, 0.12);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 700
+}
+
+.btn-link-more:hover {
+  background: rgba(21, 101, 192, 0.06)
+}
+
+/* plan highlight */
+.plan-highlight {
+  background: linear-gradient(180deg, #7da2d1, #fff);
+  border: 1px solid var(--primary);
+  padding: 24px;
+  border-radius: var(--radius)
+}
+
+/* ====== Two-column card (O que você recebe) ====== */
+.card.two-col {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  justify-items: center;
+  align-items: start;
+  margin-top: 18px;
+  padding: 18px;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  max-width: var(--box-width);
+  width: 100%;
+}
+
+/* colunas */
+.card.two-col .right:empty {
+  display: none
+}
+
+.card.two-col .left {
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+
+.card.two-col .left .receive-list {
+  display: block;
+  max-width: 460px;
+  margin: 12px auto;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  line-height: 1.6;
+  color: var(--muted)
+}
+
+.card.two-col .left .receive-list li {
+  margin: 18px 0;
+  font-size: 18px
+}
+
+.card.two-col .left p,
+.card .content p,
+.sheet-link {
+  margin-top: 18px;
+  margin-bottom: 0;
+  line-height: 1.8;
+  text-align: center
+}
+
+.sheet-link .link-blue {
+  color: var(--primary-2) !important;
+  font-weight: 600;
+  text-decoration: underline;
+  display: inline-block;
+  font-size: 16px
+}
+
+/* --- FORÇAR RESPONSIVIDADE E ALTURA AUTOMÁTICA NOS CARDS DE PLANO --- */
+:root {
+  --plan-min-height: 340px !important;
+}
+
+.grid.grid-3>* {
+  width: var(--plan-width) !important;
+  height: auto !important;
+  min-height: var(--plan-min-height) !important;
+  padding: var(--plan-padding) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  align-items: stretch !important;
+  text-align: center !important;
+  background: #fff !important;
+  border-radius: var(--radius) !important;
+  box-shadow: var(--card-shadow) !important;
+  box-sizing: border-box !important;
+  overflow: visible !important;
+}
+
+/* garantir que a área central cresça conforme necessário */
+.grid.grid-3>* .plan-body {
+  flex: 1 1 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  overflow: visible !important;
+}
+
+/* notas e botões não devem encolher */
+.plan-note,
+.plan-note .note,
+.plan-actions {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  white-space: normal !important;
+}
+
+/* botões com quebra quando necessário (mobile) */
+.grid.grid-3>* .btn {
+  white-space: nowrap !important;
+  min-width: 72px !important;
+}
+
+/* Mobile: empilha, remove min-height para evitar cards altos demais */
+@media (max-width:900px) {
+  .grid.grid-3 {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+    max-width: var(--box-width) !important;
+  }
+
+  .grid.grid-3>* {
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 16px !important;
+  }
+
+  .btn {
+    white-space: normal !important;
+  }
+}
+
+/* acessibilidade mínima: foco visível */
+a:focus {
+  outline: 3px solid rgba(21, 101, 192, 0.18);
+  outline-offset: 2px
+}
+
+/* utilitários pequenos */
+.text-muted {
+  color: var(--muted)
+}
+
+.center {
+  text-align: center
+}
+
+/* fim */

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="Light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Evolução - WR Consultoria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 16px;
+            border-radius: 8px;
+        }
+
+        h3 {
+            color: #333;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="main-page">
+    <div id="container">
+        <div style="text-align: left; padding: 10px 0;">
+            <a href="index.html" class="back-btn">← Voltar ao Dashboard</a>
+        </div>
+
+        <div id="profile">
+            <img src="./assets/logo-wr-consultoria bco.png" alt="Logo WR Consultoria" />
+            <h2>Minha Evolução</h2>
+            <p>Acompanhamento de Bioimpedância</p>
+        </div>
+
+        <!-- Weight Chart -->
+        <div class="chart-container">
+            <h3>Peso Corporal (kg)</h3>
+            <canvas id="weightChart"></canvas>
+        </div>
+
+        <!-- Body Fat Chart -->
+        <div class="chart-container">
+            <h3>Percentual de Gordura (%)</h3>
+            <canvas id="fatChart"></canvas>
+        </div>
+
+        <!-- Muscle Mass Chart -->
+        <div class="chart-container">
+            <h3>Massa Muscular (kg)</h3>
+            <!DOCTYPE html>
+            <html lang="pt-br" class="Light">
+
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Minha Evolução - WR Consultoria</title>
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+                    rel="stylesheet">
+                <link rel="stylesheet" href="./style.css">
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <style>
+                    .chart-container {
+                        background: rgba(255, 255, 255, 0.95);
+                        padding: 20px;
+                        border-radius: 16px;
+                        margin-bottom: 20px;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .back-btn {
+                        display: inline-block;
+                        margin-bottom: 20px;
+                        color: white;
+                        text-decoration: none;
+                        font-weight: 500;
+                        background: rgba(0, 0, 0, 0.2);
+                        padding: 8px 16px;
+                        border-radius: 8px;
+                    }
+
+                    h3 {
+                        color: #333;
+                        margin-bottom: 15px;
+                        text-align: center;
+                    }
+                </style>
+            </head>
+
+            <body class="main-page">
+                <div id="container">
+                    <div style="text-align: left; padding: 10px 0;">
+                        <a href="index.html" class="back-btn">← Voltar ao Dashboard</a>
+                    </div>
+
+                    <div id="profile">
+                        <img src="./assets/logo-wr-consultoria bco.png" alt="Logo WR Consultoria" />
+                        <h2>Minha Evolução</h2>
+                        <p>Acompanhamento de Bioimpedância</p>
+                    </div>
+
+                    <!-- Weight Chart -->
+                    <div class="chart-container">
+                        <h3>Peso Corporal (kg)</h3>
+                        <canvas id="weightChart"></canvas>
+                    </div>
+
+                    <!-- Body Fat Chart -->
+                    <div class="chart-container">
+                        <h3>Percentual de Gordura (%)</h3>
+                        <canvas id="fatChart"></canvas>
+                    </div>
+
+                    <!-- Muscle Mass Chart -->
+                    <div class="chart-container">
+                        <h3>Massa Muscular (kg)</h3>
+                        <canvas id="muscleChart"></canvas>
+                    </div>
+
+                </div>
+
+                <script src="../assets/js/database.js"></script>
+                <script>
+                    // Auth Check
+                    const user = DB.getCurrentUser();
+                    if (!user) {
+                        window.location.href = '../login.html';
+                    }
+
+                    // Load Data
+                    const evoData = DB.getStudentEvolution(user.id);
+
+                    // Chart Configuration
+                    const commonOptions = {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                labels: { color: '#fff' }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                ticks: { color: '#fff' }
+                            },
+                            x: {
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                ticks: { color: '#fff' }
+                            }
+                        }
+                    };
+
+                    // 1. Weight Chart
+                    new Chart(document.getElementById('weightChart'), {
+                        type: 'line',
+                        data: {
+                            labels: evoData.dates,
+                            datasets: [{
+                                label: 'Peso (kg)',
+                                data: evoData.weight,
+                                borderColor: '#3B82F6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                                tension: 0.4,
+                                fill: true
+                            }]
+                        },
+                        options: commonOptions
+                    });
+
+                    // 2. Body Fat Chart
+                    new Chart(document.getElementById('fatChart'), {
+                        type: 'bar',
+                        data: {
+                            labels: evoData.dates,
+                            datasets: [{
+                                label: '% Gordura',
+                                data: evoData.fat,
+                                backgroundColor: '#EF4444',
+                                borderRadius: 4
+                            }]
+                        },
+                        options: commonOptions
+                    });
+
+                    // 3. Muscle Mass Chart
+                    new Chart(document.getElementById('muscleChart'), {
+                        type: 'line',
+                        data: {
+                            labels: evoData.dates,
+                            datasets: [{
+                                label: 'Massa Muscular (kg)',
+                                data: evoData.muscle,
+                                borderColor: '#10B981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                                tension: 0.4,
+                                fill: true
+                            }]
+                        },
+                        options: commonOptions
+                    });
+                </script>
+            </body>
+
+            </html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano Básico - WR Consultoria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        .plan-details {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: left;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .plan-details h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .content-wrapper {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        .plan-list {
+            margin: 0 0 30px;
+            padding: 0;
+            text-align: left;
+        }
+
+        .plan-list li {
+            margin-bottom: 24px;
+            list-style: none;
+        }
+
+        .plan-list strong {
+            color: var(--primary);
+            font-size: 18px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .plan-list p {
+            color: #4B5563;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Button responsiveness */
+        .payment-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+
+        .payment-buttons .btn {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .price-tag {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .content-wrapper {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body class="main-page">
+    <header class="header">
+        <div class="container header-inner">
+            <div
+                style="width: 100%; display: flex; justify-content: flex-start; padding: 0 20px; position: absolute; top: 20px; left: 0;">
+                <a href="planos.html" class="btn"
+                    style="background: transparent; color: white; border: 1px solid white; padding: 8px 16px; font-size: 8px;">←
+                    Voltar</a>
+            </div>
+            <img class="logo" src="assets/images/logo-wr-consultoria bco.png" alt="WR Consultoria" />
+            <h2
+                style="background: rgba(255, 255, 255, 0.25); padding: 4px 8px; border-radius: 8px; text-align: center; font-size:22px;font-weight:800;color:var(--primary); margin-top: 16px;">
+                <strong>PLANO BÁSICO</strong>
+            </h2>
+        </div>
+    </header>
+
+    <main id="container">
+
+        <div class="plan-details">
+            <div class="content-wrapper">
+                <h2 style="text-align: center; font-size:32px;font-weight:800;color:var(--primary); margin-top: 0;">
+                    <b>R$ 199,00</b> <span style="font-weight:600">/mês</span>
+                </h2>
+
+                <h2 style="text-align: center;">O que está incluso?</h2>
+
+                <p style="text-align: center; margin-bottom: 30px;">Ideal para quem já tem alguma
+                    experiência de treino e precisa de um direcionamento profissional para continuar evoluindo.</p>
+
+                <ul class="plan-list">
+                    <li>
+                        <strong>• Desenvolvimento do plano de treinamento.</strong>
+                        <p>Criação da planilha, seleção dos exercícios e apresentação online do plano de 3 meses.</p>
+                    </li>
+                    <li>
+                        <strong>• Troca de treino a cada 3 meses</strong>
+                        <p>A cada 90 dias o treino é totalmente revisado e atualizado para garantir evolução contínua,
+                            respeitando seu nível físico e sua adaptação.</p>
+                    </li>
+                    <li>
+                        <strong>• Acompanhamento individual a cada 15 dias (ONLINE)</strong>
+                        <p>Check-in completo de 30 min. a cada 15 dias para ajustar cargas, repetições, tempo, evolução
+                            e
+                            dificuldades.</p>
+                    </li>
+                    <li>
+                        <strong>• Avaliação de mobilidade, força e postura (ONLINE)</strong>
+                        <p>Avaliação inicial dos seus padrões de movimento para identificar limitações, compensações e
+                            oportunidades de melhora no treino.</p>
+                    </li>
+                    <li>
+                        <strong>• Planilha com treino, vídeos e instruções</strong>
+                        <p>Você recebe uma planilha clara, organizada e completa:</p>
+                        <ul style="margin-top: 8px; padding-left: 20px; list-style-type: disc; color: #4B5563;">
+                            <li style="margin-bottom: 4px;">• exercícios com vídeo demonstrativo;</li>
+                            <li style="margin-bottom: 4px;">• instruções de execução;</li>
+                            <li style="margin-bottom: 0;">• séries, repetições e tempos</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!-- Planilha Button -->
+                <a href="https://wrconsultoria.github.io/Treino-Patty/" class="btn"
+                    style="display: block; width: 100%; background:#f9fd00; color:rgb(252, 0, 0); text-align: center; margin-bottom: 16px;">Exemplo
+                    da planilha de treino</a>
+
+                <!-- Payment Options -->
+                <div style="margin-top:12px;background:#E3F2FD;padding:10px;border-radius:8px">
+                    <div style="font-size:13px"><b>Plano trimestral</b> — Total: R$ 597,00 (3x de R$ 199,00)</div>
+                </div>
+
+                <div class="payment-buttons">
+                    <a href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=cd614c82f1a9472d8e53d2191f6616b2"
+                        class="btn" style="background:var(--primary);color:white;">PIX</a>
+                    <a href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=7a7dcee9a6e7499c84e32714e966dca0"
+                        class="btn" style="border:1px solid var(--primary);color:var(--primary);">Recorrente</a>
+                </div>
+
+                <div style="margin-top:12px;background:#E3F2FD;padding:10px;border-radius:8px">
+                    <div style="font-size:13px"><b>Plano semestral</b> — Total: R$ 1.140,00 (6x de R$ 190,00)</div>
+                </div>
+
+                <div class="payment-buttons">
+                    <a href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=8bc883c044eb48d3901c861d7c6ffa7f"
+                        class="btn" style="background:var(--primary);color:white;">PIX</a>
+                    <a href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=d549b9bffd3b4c219dad02803e2d661d"
+                        class="btn" style="border:1px solid var(--primary);color:var(--primary);">Recorrente</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div id="social-links">
+            <a href="https://www.instagram.com/personal_walmir_rezende" target="_blank">
+                <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+
+            <a href="https://www.youtube.com/@walmirrezende" target="_blank">
+                <ion-icon name="logo-youtube"></ion-icon>
+            </a>
+
+            <a href="https://wa.me/5511933444385" target="_blank">
+                <ion-icon name="logo-whatsapp"></ion-icon>
+            </a>
+        </div>
+
+
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+        © <span id="year-js"></span> Walmir Corrêa • Consultoria Online • Todos os direitos reservados
+    </footer>
+    <script>document.getElementById('year-js').textContent = new Date().getFullYear();</script>
+</body>
+
+</html>

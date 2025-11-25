@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Alunos - Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../assets/js/database.js"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <nav class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-white hover:underline">← Voltar</a>
+                <h1 class="text-xl font-bold">Gerenciar Evolução</h1>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-6">
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-lg font-bold mb-4">Selecione o Aluno</h2>
+            <div class="flex gap-4">
+                <select id="studentSelect" class="block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                    <!-- Populated by JS -->
+                </select>
+                <button onclick="loadEvolution()"
+                    class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Carregar</button>
+            </div>
+        </div>
+
+        <div id="evolutionEditor" class="bg-white p-6 rounded-lg shadow-md hidden">
+            <h2 class="text-lg font-bold mb-4">Adicionar Nova Medição</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Mês/Data</label>
+                    <input type="text" id="evoDate"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                        placeholder="Ex: Julho">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Peso (kg)</label>
+                    <input type="number" id="evoWeight"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" step="0.1">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">% Gordura</label>
+                    <input type="number" id="evoFat"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" step="0.1">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Massa Muscular (kg)</label>
+                    <input type="number" id="evoMuscle"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" step="0.1">
+                </div>
+            </div>
+
+            <button onclick="addEvolution()"
+                class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full md:w-auto">Adicionar
+                Dados</button>
+
+            <hr class="my-6">
+
+            <h3 class="font-bold mb-2">Histórico Atual</h3>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Data</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Peso</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">%
+                                Gordura</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Massa Muscular</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTable" class="bg-white divide-y divide-gray-200">
+                        <!-- History rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Auth Check
+        const user = DB.getCurrentUser();
+        if (!user || user.role !== 'admin') {
+            window.location.href = '../login.html';
+        }
+
+        // Load Students
+        const students = DB.getAllStudents();
+        const studentSelect = document.getElementById('studentSelect');
+        students.forEach(s => {
+            const option = document.createElement('option');
+            option.value = s.id;
+            option.textContent = s.name;
+            studentSelect.appendChild(option);
+        });
+
+        function loadEvolution() {
+            const studentId = document.getElementById('studentSelect').value;
+            const evo = DB.getStudentEvolution(studentId);
+
+            document.getElementById('evolutionEditor').classList.remove('hidden');
+            const tbody = document.getElementById('historyTable');
+            tbody.innerHTML = '';
+
+            if (evo.dates) {
+                for (let i = 0; i < evo.dates.length; i++) {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${evo.dates[i]}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${evo.weight[i]} kg</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${evo.fat[i]}%</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${evo.muscle[i]} kg</td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+            }
+        }
+
+        function addEvolution() {
+            const studentId = document.getElementById('studentSelect').value;
+            const date = document.getElementById('evoDate').value;
+            const weight = parseFloat(document.getElementById('evoWeight').value);
+            const fat = parseFloat(document.getElementById('evoFat').value);
+            const muscle = parseFloat(document.getElementById('evoMuscle').value);
+
+            if (date && weight && fat && muscle) {
+                DB.saveEvolutionEntry(studentId, date, weight, fat, muscle);
+                alert('Dados adicionados com sucesso!');
+
+                // Clear inputs
+                document.getElementById('evoDate').value = '';
+                document.getElementById('evoWeight').value = '';
+                document.getElementById('evoFat').value = '';
+                document.getElementById('evoMuscle').value = '';
+
+                loadEvolution(); // Refresh table
+            } else {
+                alert('Preencha todos os campos!');
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Plano Básico — WR Consultoria</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body class="main-page">
+  <header class="header">
+    <div class="container header-inner">
+      <img class="logo" src="assets/images/logo-wr-consultoria bco.png" alt="WR Consultoria" />
+      <p class="site-subtitle">Treinos personalizados • Acompanhamento semanal • Evolução consistente</p>
+
+      <div class="header-actions">
+        <a href="index.html#plans" class="plain-link">Ver Planos</a>
+        <a href="#contact" class="btn-primary">Contratar</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="container">
+    <!-- branco centralizado igual ao index.html -->
+    <section class="card" style="max-width:720px;margin:28px auto;padding:28px;">
+      <h3 class="section-title">Básico</h3>
+
+      <div class="card.two-col">
+        <div class="left">
+          <h4 style="margin:0 0 8px;font-weight:700">Plano de treino • Suporte limitado</h4>
+
+          <div class="plan-body" style="margin-top:12px">
+            <p style="font-size:22px;font-weight:800;color:var(--primary);margin:0">R$ 199,00 <span style="font-weight:600">/mês</span></p>
+            <p style="color:var(--muted);margin-top:8px">5% off à vista no PIX</p>
+
+            <ul class="receive-list" style="margin-top:18px;padding-left:0;list-style:none;">
+             <ul>
+                <li>1 treino/semana com ajustes semanais</li>
+                <li>Análise mensal de progresso</li>
+                <li>Planilha com vídeos e progressão</li>
+                <li>Comunicação via WhatsApp</li>
+             </ul>
+
+            <p class="sheet-link" style="margin-top:12px">
+              <a href="https://wrconsultoria.github.io/Treino-Patty/" target="_blank" class="link-blue"><b>Planilha de exemplo</b></a>
+            </p>
+          </div>
+          <div style="display:flex;gap:4px;margin-top:4px">
+            <a href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=00357d1cc45d42ac964e56143212e97d" class="btn" style="background:var(--primary);color:white;flex:1;text-align:center">PIX</a>
+            <a href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=cadfb86ebc4a421eac1c657f4618871c" class="btn" style="border:1px solid var(--primary);color:var(--primary);flex:1;text-align:center">Recorrente</a>
+          </div>
+          <div style="margin-top:12px;background:#E3F2FD;padding:10px;border-radius:8px">
+            <div style="font-size:13px"><b>Plano semestral</b> — Total: R$ 1.440,00 (6x de R$ 240,00)</div>
+          </div>
+          <div style="display:flex;gap:4px;margin-top:4px">
+            <a href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=5535e6e3bdda4fe68a13636ce044f8e3" class="btn" style="background:var(--primary);color:white;flex:1;text-align:center">PIX</a>
+            <a href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=7fc131a841c54ac8b4e77f15c8087b30" class="btn" style="border:1px solid var(--primary);color:var(--primary);flex:1;text-align:center">Recorrente</a>
+          </div>
+
+        <div class="right" aria-hidden="true">
+          <!-- espaço lateral (opcional imagem/visual), mantém layout igual ao index -->
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="card" style="max-width:720px;margin:18px auto;padding:20px;text-align:center">
+      <h3 class="section-title">Como contratar</h3>
+      <p>Escolha o botão PIX para pagar à vista ou Recorrente para assinar o plano mensal.</p>
+      <div style="display:flex;gap:12px;justify-content:center;margin-top:12px;flex-wrap:wrap">
+        <a href="index.html#plans" class="btn" style="background:transparent;border:1px solid #ddd;color:#333">Voltar aos planos</a>
+        <a id="whatsapp-btn" href="#" class="btn" style="background:#16A34A;color:#fff">Abrir WhatsApp</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" style="text-align:center;padding:24px;color:#888">
+    © <span id="year-js"></span> Walmir Corrêa • Consultoria Online
+  </footer>
+
+  <script>
+    document.getElementById('year-js').textContent=new Date().getFullYear();
+    // exemplo: definir link do WhatsApp (troque pelo número real)
+    document.getElementById('whatsapp-btn').href = 'https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20informações%20sobre%20o%20Plano%20B%C3%A1sico';
+  </script>
+</body>
+</html>

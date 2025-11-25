@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="Light">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard do Aluno - WR Consultoria</title>
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+        /* Dashboard Specific Styles */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            transition: transform 0.2s, background 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: #0D47A1;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: #666;
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="main-page">
+    <div id="container">
+        <div id="profile" style="position: relative;">
+            <a href="../index.html"
+                style="position: absolute; top: 0; right: 0; color: white; text-decoration: none; font-size: 14px; border: 1px solid white; padding: 4px 8px; border-radius: 4px;">Sair</a>
+            <img src="./assets/logo-wr-consultoria bco.png" alt="Logo WR Consultoria" />
+            <p>Bem-vinda de volta,</p>
+            <h2>Patrícia Picoral</h2>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Training Card -->
+            <a href="treinos.html" class="dashboard-card">
+                <ion-icon name="barbell-outline" class="card-icon"></ion-icon>
+                <span class="card-title">Meus Treinos</span>
+                <span class="card-desc">Acesse sua planilha de treinos semanal</span>
+            </a>
+
+            <!-- Evolution Card -->
+            <a href="evolucao.html" class="dashboard-card">
+                <ion-icon name="trending-up-outline" class="card-icon"></ion-icon>
+                <span class="card-title">Minha Evolução</span>
+                <span class="card-desc">Acompanhe seu progresso e bioimpedância</span>
+            </a>
+
+            <!-- Original Sheet Link (External) -->
+            <a href="https://docs.google.com/spreadsheets/u/0/" target="_blank" class="dashboard-card">
+                <ion-icon name="grid-outline" class="card-icon"></ion-icon>
+                <span class="card-title">Planilha Original</span>
+                <span class="card-desc">Acesso direto ao Google Sheets</span>
+            </a>
+        </div>
+
+        <div id="social-links">
+            <a href="https://www.instagram.com/personal_walmir_rezende" target="_blank">
+                <ion-icon name="logo-instagram"></ion-icon>
+            </a>
+            <a href="https://wa.me/5511933444385" target="_blank">
+                <ion-icon name="logo-whatsapp"></ion-icon>
+            </a>
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

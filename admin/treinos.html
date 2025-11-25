@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Treinos - Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../assets/js/database.js"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <nav class="bg-blue-900 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-white hover:underline">← Voltar</a>
+                <h1 class="text-xl font-bold">Gerenciar Treinos</h1>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto p-6">
+        <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+            <h2 class="text-lg font-bold mb-4">Selecione o Aluno e o Dia</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Aluno</label>
+                    <select id="studentSelect"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Dia da Semana</label>
+                    <select id="daySelect" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                        <option value="segunda">Segunda-feira</option>
+                        <option value="terca">Terça-feira</option>
+                        <option value="quarta">Quarta-feira</option>
+                        <option value="quinta">Quinta-feira</option>
+                        <option value="sexta">Sexta-feira</option>
+                        <option value="sabado">Sábado</option>
+                        <option value="domingo">Domingo</option>
+                    </select>
+                </div>
+                <div class="flex items-end">
+                    <button onclick="loadWorkout()"
+                        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-full">Carregar
+                        Treino</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="workoutEditor" class="bg-white p-6 rounded-lg shadow-md hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold">Editar Treino</h2>
+                <button onclick="saveWorkout()"
+                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Salvar Alterações</button>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Título do Treino (Ex: Pernas + Glúteos)</label>
+                <input type="text" id="workoutTitle"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Descanso entre séries</label>
+                <input type="text" id="workoutRest"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="Ex: 40s">
+            </div>
+
+            <h3 class="font-bold mb-2">Exercícios</h3>
+            <div id="exercisesList" class="space-y-4">
+                <!-- Exercises will be added here -->
+            </div>
+
+            <button onclick="addExercise()" class="mt-4 text-blue-600 hover:underline flex items-center gap-1">
+                <span class="text-xl">+</span> Adicionar Exercício
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Auth Check
+        const user = DB.getCurrentUser();
+        if (!user || user.role !== 'admin') {
+            window.location.href = '../login.html';
+        }
+
+        // Load Students
+        const students = DB.getAllStudents();
+        const studentSelect = document.getElementById('studentSelect');
+        students.forEach(s => {
+            const option = document.createElement('option');
+            option.value = s.id;
+            option.textContent = s.name;
+            studentSelect.appendChild(option);
+        });
+
+        // Load Exercises for Dropdown
+        const exerciseLibrary = DB.getExerciseLibrary();
+
+        function getExerciseOptions(selectedName) {
+            let options = '<option value="">Selecione um exercício...</option>';
+            exerciseLibrary.forEach(ex => {
+                const selected = ex.name === selectedName ? 'selected' : '';
+                options += `<option value="${ex.name}" data-video="${ex.video}" ${selected}>${ex.name}</option>`;
+            });
+            return options;
+        }
+
+        function loadWorkout() {
+            const studentId = document.getElementById('studentSelect').value;
+            const day = document.getElementById('daySelect').value;
+            const workout = DB.getStudentWorkout(studentId, day);
+
+            document.getElementById('workoutEditor').classList.remove('hidden');
+            document.getElementById('exercisesList').innerHTML = '';
+
+            if (workout) {
+                document.getElementById('workoutTitle').value = workout.title || '';
+                document.getElementById('workoutRest').value = workout.rest || '';
+                if (workout.exercises) {
+                    workout.exercises.forEach(ex => addExercise(ex));
+                }
+            } else {
+                document.getElementById('workoutTitle').value = '';
+                document.getElementById('workoutRest').value = '';
+                addExercise(); // Add one empty row
+            }
+        }
+
+        function addExercise(data = {}) {
+            const div = document.createElement('div');
+            div.className = 'grid grid-cols-1 md:grid-cols-4 gap-2 p-4 border border-gray-200 rounded bg-gray-50 exercise-row';
+
+            const options = getExerciseOptions(data.name);
+
+            div.innerHTML = `
+                <div>
+                    <label class="text-xs text-gray-500">Nome do Exercício</label>
+                    <select class="ex-name w-full border p-1 rounded" onchange="updateVideo(this)">
+                        ${options}
+                    </select>
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500">Séries</label>
+                    <input type="text" class="ex-sets w-full border p-1 rounded" value="${data.sets || ''}">
+                </div>
+                <div>
+                    <label class="text-xs text-gray-500">Repetições</label>
+                    <input type="text" class="ex-reps w-full border p-1 rounded" value="${data.reps || ''}">
+                </div>
+                <div class="relative">
+                    <label class="text-xs text-gray-500">Link do Vídeo (Youtube)</label>
+                    <div class="flex gap-2">
+                        <input type="text" class="ex-video w-full border p-1 rounded bg-gray-100" value="${data.video || ''}" readonly>
+                        <button onclick="this.closest('.exercise-row').remove()" class="text-red-500 hover:text-red-700">✕</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('exercisesList').appendChild(div);
+        }
+
+        function updateVideo(select) {
+            const option = select.options[select.selectedIndex];
+            const video = option.getAttribute('data-video');
+            const row = select.closest('.exercise-row');
+            row.querySelector('.ex-video').value = video || '';
+        }
+
+        function saveWorkout() {
+            const studentId = document.getElementById('studentSelect').value;
+            const day = document.getElementById('daySelect').value;
+
+            const title = document.getElementById('workoutTitle').value;
+            const rest = document.getElementById('workoutRest').value;
+
+            const exercises = [];
+            document.querySelectorAll('.exercise-row').forEach(row => {
+                const name = row.querySelector('.ex-name').value;
+                if (name) {
+                    exercises.push({
+                        name: name,
+                        sets: row.querySelector('.ex-sets').value,
+                        reps: row.querySelector('.ex-reps').value,
+                        video: row.querySelector('.ex-video').value
+                    });
+                }
+            });
+
+            const workoutData = {
+                title,
+                rest,
+                exercises
+            };
+
+            DB.saveStudentWorkout(studentId, day, workoutData);
+            alert('Treino salvo com sucesso!');
+        }
+    </script>
+</body>
+
+</html>

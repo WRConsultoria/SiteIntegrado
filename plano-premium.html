@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plano Premium - WR Consultoria</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <style>
+        .plan-details {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: left;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .plan-details h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .plan-details ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .plan-details li {
+            margin-bottom: 10px;
+            color: #374151;
+        }
+
+        .price-tag {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="main-page">
+    <header class="header">
+        <div class="container header-inner">
+            <div
+                style="width: 100%; display: flex; justify-content: flex-start; padding: 0 20px; position: absolute; top: 20px; left: 0;">
+                <a href="planos.html" class="btn"
+                    style="background: transparent; color: white; border: 1px solid white; padding: 8px 16px; font-size: 14px;">←
+                    Voltar aos Planos</a>
+            </div>
+            <img class="logo" src="assets/images/logo-wr-consultoria bco.png" alt="WR Consultoria" />
+            <h2><b>PLANO PREMIUM</b></h2>
+        </div>
+    </header>
+
+    <main id="container">
+        <div class="plan-details">
+            <h2>A experiência definitiva</h2>
+            <p style="margin-bottom: 20px;">O Plano Premium é a consultoria mais completa, com acompanhamento total para
+                garantir que você atinja sua melhor versão.</p>
+
+            <ul>
+                <li><b>Tudo do Plano Completo:</b> Treino, app, análise de vídeos e cardio.</li>
+                <li><b>Videochamada Mensal:</b> Reunião de 30min para alinhamento de metas e feedback.</li>
+                <li><b>Ajustes Semanais:</b> Monitoramento constante da sua evolução.</li>
+                <li><b>Consultoria Nutricional (Parceiro):</b> Desconto exclusivo com nutricionista parceiro.</li>
+                <li><b>Acesso ao "Close Friends":</b> Conteúdo exclusivo no Instagram.</li>
+            </ul>
+
+            <div class="price-tag">R$ 399,00 <span style="font-size: 1rem; font-weight: 500;">/mês</span></div>
+
+            <div style="text-align: center;">
+                <a href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=69368a1afa6b435086e3ba13da0f8022"
+                    class="btn" style="background: var(--primary); color: white; padding: 16px 32px;">Assinar Agora
+                    (PIX)</a>
+                <a href="https://www.mercadopago.com.br/subscriptions/checkout?preapproval_plan_id=69368a1afa6b435086e3ba13da0f8022"
+                    class="btn"
+                    style="background: white; color: var(--primary); border: 1px solid var(--primary); padding: 16px 32px; margin-left: 10px;">Assinar
+                    Recorrente</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        © <span id="year-js"></span> Walmir Corrêa • Consultoria Online • Todos os direitos reservados
+    </footer>
+    <script>document.getElementById('year-js').textContent = new Date().getFullYear();</script>
+</body>
+
+</html>

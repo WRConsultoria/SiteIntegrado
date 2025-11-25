@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="Light">
+
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meus Treinos - WR Consultoria</title>
+  <link rel="stylesheet" href="./style.css" />
+  <script src="../assets/js/database.js"></script>
+</head>
+
+<body class="main-page">
+  <div id="container">
+    <div id="profile">
+      <a href="index.html"
+        style="position: absolute; top: 0; left: 0; color: white; text-decoration: none; font-size: 14px; border: 1px solid white; padding: 4px 8px; border-radius: 4px;">←
+        Voltar</a>
+      <a href="../index.html"
+        style="position: absolute; top: 0; right: 0; color: white; text-decoration: none; font-size: 14px; border: 1px solid white; padding: 4px 8px; border-radius: 4px;">Sair</a>
+      <img src="./assets/logo-wr-consultoria bco.png" alt="Logo WR Consultoria" />
+      <p>Consultoria Online</p>
+      <p></p>
+      <h2 id="studentName">Aluno</h2>
+    </div>
+
+    <ul id="workoutList">
+      <!-- Treinos serão carregados aqui -->
+    </ul>
+
+    <div id="social-links">
+      <a href="https://www.instagram.com/personal_walmir_rezende" target="_blank">
+        <ion-icon name="logo-instagram"></ion-icon>
+      </a>
+      <a href="https://www.youtube.com/@walmirrezende" target="_blank">
+        <ion-icon name="logo-youtube"></ion-icon>
+      </a>
+      <a href="https://wa.me/5511933444385" target="_blank">
+        <ion-icon name="logo-whatsapp"></ion-icon>
+      </a>
+    </div>
+
+  </div>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+  <script>
+    // Auth Check
+    const user = DB.getCurrentUser();
+    if (!user) {
+      window.location.href = '../login.html';
+    }
+    document.getElementById('studentName').textContent = user.name;
+
+    const days = [
+      { id: 'segunda', label: 'Segunda-feira' },
+      { id: 'terca', label: 'Terça-feira' },
+      { id: 'quarta', label: 'Quarta-feira' },
+      { id: 'quinta', label: 'Quinta-feira' },
+      { id: 'sexta', label: 'Sexta-feira' },
+      { id: 'sabado', label: 'Sábado' },
+      { id: 'domingo', label: 'Domingo' }
+    ];
+
+    const list = document.getElementById('workoutList');
+
+    days.forEach(day => {
+      const workout = DB.getStudentWorkout(user.id, day.id);
+
+      if (workout) {
+        const li = document.createElement('li');
+
+        // Button
+        const btn = document.createElement('button');
+        btn.className = 'btn-toggle-content';
+        btn.textContent = day.label;
+        btn.onclick = () => {
+          const content = document.getElementById(day.id + 'Content');
+          content.classList.toggle('show-content');
+
+          // Close others
+          document.querySelectorAll('.hidden-content.show-content').forEach(el => {
+            if (el.id !== day.id + 'Content') {
+              el.classList.remove('show-content');
+            }
+          });
+        };
+        li.appendChild(btn);
+
+        // Content Div
+        const div = document.createElement('div');
+        div.id = day.id + 'Content';
+        div.className = 'hidden-content';
+
+        let exercisesHtml = '';
+        if (workout.exercises && workout.exercises.length > 0) {
+          exercisesHtml = `
+               <table>
+                  <thead>
+                      <tr>
+                          <th>Exercício</th>
+                          <th>Séries</th>
+                          <th>Rep.</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      ${workout.exercises.map(ex => `
+                        <tr>
+                          <td><a href="${ex.video || '#'}" target="_blank">${ex.name}</a></td>
+                          <td>${ex.sets}</td>
+                          <td>${ex.reps}</td>
+                        </tr>
+                      `).join('')}
+                  </tbody>
+               </table>
+             `;
+        }
+
+        div.innerHTML = `
+            <h4>${workout.title || 'Treino do Dia'}</h4>
+            <p>Descanso entre as séries: ${workout.rest || 'N/A'}</p>
+            ${exercisesHtml}
+          `;
+
+        li.appendChild(div);
+        list.appendChild(li);
+      }
+    });
+  </script>
+</body>
+
+</html>
