@@ -12,3 +12,7 @@ Este diretório contém a página de apresentação dos planos de consultoria (B
 - Visualização comparativa dos planos.
 - Links para download/visualização de PDFs informativos.
 - Integração com Mercado Pago para pagamentos (links diretos).
+
+"" Acese
+
+https://wrconsultoria.github.io/SiteIntegrado/
